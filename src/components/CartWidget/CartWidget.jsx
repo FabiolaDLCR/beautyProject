@@ -1,4 +1,4 @@
-import cart from './assets/agenda.svg'
+import cart from './assets/cart.svg'
 
 function CartWidget() {
     return (
