@@ -1,30 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { data } from '../data.js';
+import { getProducts } from '../../firebase/db'; 
 import ItemCount from '../ItemCount/ItemCount.jsx';
 import { useParams } from 'react-router-dom';
 import './ItemListContainer.css'; 
 
 export const ItemListContainer = () => {
-    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+
     const { category } = useParams();  
-    const [filteredData, setFilteredData] = useState([]);
-
     useEffect(() => {
-       
-        setLoading(true);
-        
-        
-        const timer = setTimeout(() => {
-            const filtered = category ? data.filter(product => product.category === category) : data;
-            setFilteredData(filtered);
-            setLoading(false);  
-        }, 1000);
+        const fetchProducts = async () => {
+            try {
+                const fetchedProducts = await getProducts();
+                if (category) {
+                    
+                    setProducts(fetchedProducts.filter(product => product.category === category));
+                } else {
+                    setProducts(fetchedProducts); 
+                }
+            } catch (error) {
+                console.error("Error fetching products:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-        return () => clearTimeout(timer); 
+        fetchProducts();
     }, [category]);
 
-    /////modal detalles de producto
     const handleViewDetails = (product) => {
         setSelectedProduct(product);
     };
@@ -33,32 +38,31 @@ export const ItemListContainer = () => {
         setSelectedProduct(null);
     };
 
+    if (loading) {
+        return <p>Cargando productos...</p>; 
+    }
+
     return (
         <div>
-        
-            {loading ? (  
-                <p>Cargando productos...</p>
-            ) : (
-                <div className="container-items">
-                    {filteredData.map(product => (
-                        <div className="item" key={product.id}>
-                            <figure>
-                                <img src={product.urlImg} alt={product.productName} />
-                            </figure>
-                            <div className="info-product">
-                                <h2>{product.productName}</h2>
-                                <p className="price">${product.price}</p>
-                                <ItemCount initial={0} stock={10} />
-                                <button onClick={() => handleViewDetails(product)}>
-                                    Ver detalles
-                                </button>
-                            </div>
+            <h2 className='bienvenida'>Todos nuestros productos</h2>
+            <div className="container-items">
+                {products.map(product => (
+                    <div className="item" key={product.id}>
+                        <figure>
+                            <img src={product.urlImg} alt={product.productName} />
+                        </figure>
+                        <div className="info-product">
+                            <h2>{product.productName}</h2>
+                            <p className="price">${product.price}</p>
+                            <ItemCount initial={0} stock={10} />
+                            <button onClick={() => handleViewDetails(product)}>
+                                Ver detalles
+                            </button>
                         </div>
-                    ))}
-                </div>
-            )}
+                    </div>
+                ))}
+            </div>
 
-            
             {selectedProduct && (
                 <div className="modal">
                     <div className="modal-content">
