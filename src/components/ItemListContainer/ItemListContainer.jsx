@@ -1,18 +1,19 @@
+// src/components/ItemListContainer/ItemListContainer.jsx
 import React, { useState, useEffect, useContext } from 'react';
 import { getProducts } from '../../firebase/db'; 
 import ItemCount from '../ItemCount/ItemCount.jsx';
 import { useParams } from 'react-router-dom';
+import { CartContext } from '../../context/cartContext.jsx';
 import './ItemListContainer.css'; 
-import { CartContext } from '../../context/cartContext.jsx'; // Importamos el CartContext
 
 export const ItemListContainer = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedProduct, setSelectedProduct] = useState(null);
 
-    const { addToCart } = useContext(CartContext); // Usamos addToCart del contexto
-
     const { category } = useParams();  
+    const { addToCart } = useContext(CartContext); // Usa el contexto del carrito
+
     useEffect(() => {
         const fetchProducts = async () => {
             try {
@@ -40,6 +41,10 @@ export const ItemListContainer = () => {
         setSelectedProduct(null);
     };
 
+    const handleAddToCart = (quantity) => {
+        addToCart(selectedProduct, quantity); // Asegúrate de que selectedProduct esté definido
+    };
+
     if (loading) {
         return <p>Cargando productos...</p>; 
     }
@@ -56,10 +61,11 @@ export const ItemListContainer = () => {
                         <div className="info-product">
                             <h2>{product.productName}</h2>
                             <p className="price">${product.price}</p>
-                            <ItemCount initial={0} stock={10} />
-                            <button onClick={() => addToCart()}> {/* Usa addToCart aquí */}
-                                Agregar al carrito
-                            </button>
+                            <ItemCount 
+                                initial={1} 
+                                stock={10} 
+                                onAdd={(quantity) => addToCart(product, quantity)} // Pasar la función correcta
+                            />
                             <button onClick={() => handleViewDetails(product)}>
                                 Ver detalles
                             </button>
@@ -78,7 +84,11 @@ export const ItemListContainer = () => {
                         <img src={selectedProduct.urlImg} alt={selectedProduct.productName} />
                         <p>{selectedProduct.description}</p>
                         <p className="price">Precio: ${selectedProduct.price}</p>
-                        <ItemCount initial={0} stock={10} />
+                        <ItemCount 
+                            initial={1} 
+                            stock={10} 
+                            onAdd={(quantity) => addToCart(selectedProduct, quantity)} 
+                        />
                     </div>
                 </div>
             )}

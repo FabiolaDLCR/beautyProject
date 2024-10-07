@@ -1,16 +1,17 @@
+// src/components/CartWidget/CartWidget.jsx
 import { useContext } from 'react';
-import { CartContext } from '../../context/CartContext'; // Asegúrate de tener este contexto
+import { CartContext } from '../../context/CartContext';
 import cart from './assets/cart.svg';
-import './CartWidget.css'; // Importa el archivo de estilo
+import './CartWidget.css';
 
 function CartWidget() {
-    const { cartCount } = useContext(CartContext); // Se obtiene la cantidad del contexto
+    const { cartCount, toggleCartVisibility } = useContext(CartContext);
 
     return (
-      <div className="cart-icon">
+      <div className="cart-icon" onClick={toggleCartVisibility}>
         <img src={cart} alt="cart-icon" />
         {cartCount > 0 && (
-          <span className="cart-count">{cartCount}</span> // Muestra el número del carrito
+          <span className="cart-count">{cartCount}</span> 
         )}
       </div>
     );

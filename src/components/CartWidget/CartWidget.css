@@ -1,17 +1,19 @@
 .cart-icon {
     position: relative;
     display: inline-block;
+    cursor: pointer;
 }
+      
 
 .cart-icon img {
-    width: 40px; /* Ajusta el tamaño del ícono */
+    width: 40px; 
 }
 
 .cart-count {
     position: absolute;
     top: 0;
     right: 0;
-    background-color: red;
+    background-color: rgb(157, 110, 156);
     color: white;
     border-radius: 50%;
     padding: 4px 8px;
