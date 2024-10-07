@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { getProducts } from '../../firebase/db'; 
 import ItemCount from '../ItemCount/ItemCount.jsx';
 import { useParams } from 'react-router-dom';
 import './ItemListContainer.css'; 
+import { CartContext } from '../../context/cartContext.jsx'; // Importamos el CartContext
 
 export const ItemListContainer = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedProduct, setSelectedProduct] = useState(null);
+
+    const { addToCart } = useContext(CartContext); // Usamos addToCart del contexto
 
     const { category } = useParams();  
     useEffect(() => {
@@ -15,7 +18,6 @@ export const ItemListContainer = () => {
             try {
                 const fetchedProducts = await getProducts();
                 if (category) {
-                    
                     setProducts(fetchedProducts.filter(product => product.category === category));
                 } else {
                     setProducts(fetchedProducts); 
@@ -55,6 +57,9 @@ export const ItemListContainer = () => {
                             <h2>{product.productName}</h2>
                             <p className="price">${product.price}</p>
                             <ItemCount initial={0} stock={10} />
+                            <button onClick={() => addToCart()}> {/* Usa addToCart aquí */}
+                                Agregar al carrito
+                            </button>
                             <button onClick={() => handleViewDetails(product)}>
                                 Ver detalles
                             </button>
