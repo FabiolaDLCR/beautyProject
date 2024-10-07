@@ -1,4 +1,4 @@
-// src/App.jsx
+
 import React, { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { CartProvider, CartContext } from './context/cartContext';
@@ -18,7 +18,7 @@ const AppContent = () => {
       <Routes>
         <Route path='/' element={<ItemListContainer />} />
         <Route path="/category/:category" element={<ItemListContainer />} />
-        {/* Otras rutas */}
+
       </Routes>
       {isCartVisible && <CartModal />}
     </div>

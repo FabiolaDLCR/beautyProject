@@ -1,4 +1,4 @@
-// src/components/ItemListContainer/ItemListContainer.jsx
+
 import React, { useState, useEffect, useContext } from 'react';
 import { getProducts } from '../../firebase/db'; 
 import ItemCount from '../ItemCount/ItemCount.jsx';
@@ -12,8 +12,7 @@ export const ItemListContainer = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
 
     const { category } = useParams();  
-    const { addToCart } = useContext(CartContext); // Usa el contexto del carrito
-
+    const { addToCart } = useContext(CartContext); 
     useEffect(() => {
         const fetchProducts = async () => {
             try {
@@ -42,7 +41,7 @@ export const ItemListContainer = () => {
     };
 
     const handleAddToCart = (quantity) => {
-        addToCart(selectedProduct, quantity); // Asegúrate de que selectedProduct esté definido
+        addToCart(selectedProduct, quantity); 
     };
 
     if (loading) {
@@ -64,7 +63,7 @@ export const ItemListContainer = () => {
                             <ItemCount 
                                 initial={1} 
                                 stock={10} 
-                                onAdd={(quantity) => addToCart(product, quantity)} // Pasar la función correcta
+                                onAdd={(quantity) => addToCart(product, quantity)} 
                             />
                             <button onClick={() => handleViewDetails(product)}>
                                 Ver detalles

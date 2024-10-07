@@ -11,7 +11,7 @@ function CartModal() {
         <div className="cart-summary">
           <h2>Resumen del pedido</h2>
           <p>Total de artículos: {cartCount}</p>
-          {/* Aquí puedes agregar más detalles sobre los productos */}
+    
         </div>
         <div className="cart-form">
           <h2>Datos del comprador</h2>

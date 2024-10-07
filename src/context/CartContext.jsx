@@ -1,12 +1,12 @@
-// src/context/CartContext.jsx
+
 import React, { createContext, useState } from 'react';
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cartCount, setCartCount] = useState(0);
-  const [cartItems, setCartItems] = useState([]); // Para almacenar los productos en el carrito
-  const [isCartVisible, setIsCartVisible] = useState(false); // Estado para controlar la visibilidad del carrito
+  const [cartItems, setCartItems] = useState([]); 
+  const [isCartVisible, setIsCartVisible] = useState(false); 
 
   const addToCart = (product, quantity) => {
     setCartCount(cartCount + quantity);

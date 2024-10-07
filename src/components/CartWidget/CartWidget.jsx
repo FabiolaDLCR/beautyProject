@@ -1,4 +1,4 @@
-// src/components/CartWidget/CartWidget.jsx
+
 import { useContext } from 'react';
 import { CartContext } from '../../context/CartContext';
 import cart from './assets/cart.svg';
