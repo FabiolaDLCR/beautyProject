@@ -11,7 +11,7 @@ export const ItemListContainer = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
 
     const { category } = useParams();  
-    const { addToCart } = useContext(CartContext); // Contexto para agregar al carrito
+    const { addToCart } = useContext(CartContext); 
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -32,21 +32,18 @@ export const ItemListContainer = () => {
         fetchProducts();
     }, [category]);
 
-    // Función para ver los detalles del producto seleccionado
     const handleViewDetails = (product) => {
         setSelectedProduct(product);
     };
 
-    // Función para cerrar el modal de detalles del producto
     const handleCloseModal = () => {
         setSelectedProduct(null);
     };
 
-    // Función para agregar el producto al carrito
     const handleAddToCart = (quantity) => {
         if (selectedProduct) {
-            addToCart(selectedProduct, quantity); // Agregar al carrito desde el modal
-            handleCloseModal(); // Opcional: cierra el modal después de agregar
+            addToCart(selectedProduct, quantity); 
+            handleCloseModal(); 
         }
     };
 
@@ -66,11 +63,11 @@ export const ItemListContainer = () => {
                         <div className="info-product">
                             <h2>{product.productName}</h2>
                             <p className="price">${product.price}</p>
-                            {/* Componente ItemCount para agregar cantidad al carrito */}
+  
                             <ItemCount 
                                 initial={1} 
-                                stock={product.stock || 10} // Asumiendo que tienes el stock en el producto
-                                onAdd={(quantity) => addToCart(product, quantity)} // Agregar directo al carrito
+                                stock={product.stock || 10} 
+                                onAdd={(quantity) => addToCart(product, quantity)} 
                             />
                             <button onClick={() => handleViewDetails(product)}>
                                 Ver detalles
@@ -80,7 +77,7 @@ export const ItemListContainer = () => {
                 ))}
             </div>
 
-            {/* Modal de detalles del producto seleccionado */}
+            
             {selectedProduct && (
                 <div className="modal">
                     <div className="modal-content">
@@ -91,11 +88,11 @@ export const ItemListContainer = () => {
                         <img src={selectedProduct.urlImg} alt={selectedProduct.productName} />
                         <p>{selectedProduct.description}</p>
                         <p className="price">Precio: ${selectedProduct.price}</p>
-                        {/* ItemCount dentro del modal para agregar al carrito */}
+                        
                         <ItemCount 
                             initial={1} 
-                            stock={selectedProduct.stock || 10} // Asumiendo que tienes el stock en el producto
-                            onAdd={handleAddToCart} // Agregar el producto seleccionado con la cantidad
+                            stock={selectedProduct.stock || 10} 
+                            onAdd={handleAddToCart} 
                         />
                     </div>
                 </div>

@@ -23,7 +23,7 @@ const AppContent = () => {
         <Route path="/category/:category" element={<ItemListContainer />} />
       </Routes>
 
-      {isCartVisible && <CartModal onClose={handleCloseModal} />} {/* Se mostrará cuando isCartVisible sea true */}
+      {isCartVisible && <CartModal onClose={handleCloseModal} />} 
     </div>
   );
 };

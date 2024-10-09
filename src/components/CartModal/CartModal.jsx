@@ -3,12 +3,12 @@ import { CartContext } from '../../context/cartContext';
 import './CartModal.css';
 
 const CartModal = ({ onClose }) => {
-    const { cartItems, getTotalPrice } = useContext(CartContext); // Obtener los productos del carrito y el total
+    const { cartItems, getTotalPrice } = useContext(CartContext); 
 
     return (
         <div className="cart-modal">
             <div className="cart-modal-content">
-                {/* Botón para cerrar el modal */}
+                
                 <button className="close-button" onClick={onClose}>
                     &times;
                 </button>
