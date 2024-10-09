@@ -1,4 +1,3 @@
-
 import React, { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { CartProvider, CartContext } from './context/cartContext';
@@ -9,7 +8,11 @@ import CartModal from './components/CartModal/CartModal';
 import './index.css';
 
 const AppContent = () => {
-  const { isCartVisible } = useContext(CartContext);
+  const { isCartVisible, setIsCartVisible } = useContext(CartContext);
+
+  const handleCloseModal = () => {
+    setIsCartVisible(false);
+  };
 
   return (
     <div className='App'>
@@ -18,9 +21,9 @@ const AppContent = () => {
       <Routes>
         <Route path='/' element={<ItemListContainer />} />
         <Route path="/category/:category" element={<ItemListContainer />} />
-
       </Routes>
-      {isCartVisible && <CartModal />}
+
+      {isCartVisible && <CartModal onClose={handleCloseModal} />} {/* Se mostrará cuando isCartVisible sea true */}
     </div>
   );
 };
@@ -28,7 +31,7 @@ const AppContent = () => {
 function App() {
   return (
     <CartProvider>
-      <Router basename="/beautyProject"> 
+      <Router basename="/beautyProject">
         <AppContent />
       </Router>
     </CartProvider>
